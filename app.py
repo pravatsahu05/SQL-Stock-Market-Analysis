@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import sqlite3
 import pandas as pd
@@ -468,7 +469,7 @@ CHARTS_INSIGHTS = {
         ],
         'recommendations': [
             'Signal Filtering: Never execute crossover signals that fire immediately following unadjusted corporate action dates.',
-            'Long-Term Holding: Retain core compounder positions when price drops are driven purely by share splits.'
+            'Long-Term Holding: Retain core compounder positions when price drops are driven purely by shareholder bonus distributions.'
         ],
         'caveats': [
             'Unadjusted technical trading bots would have suffered immediate whipsaw loss by shorting TCS right before a major 2018 rally.'
@@ -486,7 +487,7 @@ CHARTS_INSIGHTS = {
         ],
         'recommendations': [
             'Historical Data Normalization: Apply multiplier adjustments backwards from current date when maintaining price databases.',
-            'Total Return Strategy: Factor in both bonus shares and regular dividend yield when evaluating large-cap IT assets.'
+            'Total Return Strategy: Factor in both bonus shares and regular dividend yield when evaluating large-cap IT shareholder value.'
         ],
         'caveats': [
             'Multiple historical splits (e.g. 2014 & 2015) require compound multiplier adjustments for multi-decade studies.'
@@ -545,7 +546,6 @@ def execute_custom_query():
     if not sql:
         return jsonify({'error': 'No SQL query provided'}), 400
     
-    # Basic safety check: allow SELECT and WITH queries
     first_word = sql.split()[0].upper() if sql.split() else ''
     if first_word not in ['SELECT', 'WITH', 'PRAGMA', 'EXPLAIN']:
         return jsonify({'error': 'Only SELECT / WITH read queries are allowed in custom query mode'}), 403
@@ -577,5 +577,12 @@ def get_chart_insights():
     return jsonify(CHARTS_INSIGHTS)
 
 if __name__ == '__main__':
-    print('Starting SQL Stock Market Analysis Web Dashboard on http://127.0.0.1:5000')
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    # Check if launched via Streamlit CLI or Streamlit Cloud
+    if 'streamlit' in sys.modules or any('streamlit' in arg for arg in sys.argv):
+        try:
+            import streamlit_app
+        except Exception as e:
+            print("Importing streamlit_app error:", e)
+    else:
+        print('Starting SQL Stock Market Analysis Web Dashboard on http://127.0.0.1:5000')
+        app.run(host='127.0.0.1', port=5000, debug=False)
