@@ -42,13 +42,13 @@ def build_pdf():
     style_subtitle = ParagraphStyle(
         'DocSubtitle', parent=styles['Normal'],
         fontName='Helvetica', fontSize=12, leading=16,
-        textColor=SECONDARY, spaceAfter=15
+        textColor=SECONDARY, spaceAfter=10
     )
 
     style_meta = ParagraphStyle(
         'MetaText', parent=styles['Normal'],
-        fontName='Helvetica-Oblique', fontSize=9, leading=12,
-        textColor=colors.HexColor('#7f8c8d'), spaceAfter=15
+        fontName='Helvetica', fontSize=9, leading=13,
+        textColor=TEXT_DARK, spaceAfter=15
     )
 
     style_h1 = ParagraphStyle(
@@ -105,30 +105,18 @@ def build_pdf():
         textColor=TEXT_DARK, alignment=TA_LEFT
     )
 
-    style_box_header_insight = ParagraphStyle(
-        'BoxHdrInsight', parent=styles['Normal'],
-        fontName='Helvetica-Bold', fontSize=10, leading=12,
-        textColor=SECONDARY, spaceAfter=4
-    )
-
-    style_box_header_recom = ParagraphStyle(
-        'BoxHdrRecom', parent=styles['Normal'],
-        fontName='Helvetica-Bold', fontSize=10, leading=12,
-        textColor=ACCENT, spaceAfter=4
-    )
-
-    style_box_header_caveat = ParagraphStyle(
-        'BoxHdrCaveat', parent=styles['Normal'],
-        fontName='Helvetica-Bold', fontSize=10, leading=12,
-        textColor=WARNING_CLR, spaceAfter=4
-    )
-
     story = []
 
     # Title Banner
     story.append(Paragraph("Stock Market Analysis in SQL", style_title))
     story.append(Paragraph("A Comprehensive Insights, Visual Analysis & Technical Strategy Report", style_subtitle))
-    story.append(Paragraph("<b>Author:</b> Pravat &nbsp;|&nbsp; <b>Database:</b> MySQL 8.0 / SQLite 3 &nbsp;|&nbsp; <b>Scope:</b> Six NSE Stocks (Jan 2015 – Jul 2018)", style_meta))
+    
+    meta_html = (
+        "<b>Author:</b> Pravat &nbsp;|&nbsp; <b>Database:</b> MySQL 8.0 / SQLite 3 &nbsp;|&nbsp; <b>Scope:</b> Six NSE Stocks (Jan 2015 – Jul 2018)<br/>"
+        "🌐 <b>Live Web Dashboard:</b> <font color='#2980b9'><u>https://sql-stock-market-analysis.onrender.com/</u></font><br/>"
+        "💻 <b>GitHub Repository:</b> <font color='#2980b9'><u>https://github.com/pravatsahu05/SQL-Stock-Market-Analysis</u></font>"
+    )
+    story.append(Paragraph(meta_html, style_meta))
     story.append(HRFlowable(width="100%", thickness=1.5, color=PRIMARY, spaceAfter=15))
 
     # Executive Summary Box
@@ -136,6 +124,10 @@ def build_pdf():
     <b>EXECUTIVE SUMMARY:</b><br/>
     This report analyzes 889 trading days of historical market data across six major National Stock Exchange (NSE) stocks: 
     <b>Bajaj Auto, Eicher Motors, Hero Motocorp, Infosys, TCS, and TVS Motors</b>. Using advanced SQL window functions, CTE pipelines, and moving average cross strategies (20-day vs 50-day SMA), we evaluated performance, signal accuracy, and data integrity.<br/><br/>
+    <b>Key Project Links:</b>
+    <br/>• <b>Live Interactive Dashboard:</b> https://sql-stock-market-analysis.onrender.com/
+    <br/>• <b>GitHub Project Repository:</b> https://github.com/pravatsahu05/SQL-Stock-Market-Analysis
+    <br/><br/>
     <b>Key Takeaways:</b>
     <br/>• <b>Data Trap Uncovered:</b> Raw closing prices falsely report TCS (-23.8%) and Infosys (-30.9%) as severe market underperformers. Adjusting for 1:1 corporate bonus issues/splits reveals true compounded gains of <b>+52.4% for TCS</b> and <b>+38.2% for Infosys</b>.
     <br/>• <b>Top Performer:</b> TVS Motors delivered an outstanding <b>+86.9%</b> gain, followed closely by Eicher Motors at <b>+82.6%</b>.
@@ -210,14 +202,14 @@ def build_pdf():
         ins_c1 = (
             "<b>📌 Key Business Insights:</b><br/>"
             "• TVS Motors (+86.9%) and Eicher Motors (+82.6%) dominated long-term capital compounding across all 6 stocks.<br/>"
-            "• TVS Motors surged from a normalized index of 100 on Jan 1, 2015 to 186.9 on July 31, 2018.<br/>"
+            "• TVS Motors surged from an initial index level of 100 on Jan 1, 2015 to 186.9 on July 31, 2018.<br/>"
             "• Eicher Motors reached peak levels above 215 in late 2017 before consolidating to 182.6.<br/>"
-            "• Raw unadjusted IT stock series (TCS & Infosys) show severe artificial sharp drops caused by 1:1 bonus share issues.<br/><br/>"
+            "• Unadjusted IT stocks (TCS & Infosys) display an apparent sharp plunge due to 1:1 bonus share splits rather than business deterioration.<br/><br/>"
             "<b>💡 Strategic Recommendations:</b><br/>"
-            "• Overweight high-growth auto manufacturers during multi-year consumer expansion cycles.<br/>"
+            "• Overweight high-growth auto manufacturers during consumer expansion cycles.<br/>"
             "• Use performance rebasing (base = 100) to evaluate high-nominal price assets (Eicher at ₹27,000) alongside low-nominal price assets (TVS at ₹500).<br/><br/>"
             "<b>⚠️ Methodological Risk & Caveats:</b><br/>"
-            "• Unadjusted price charts misrepresent true wealth growth for companies executing stock splits or bonus share issues."
+            "• Unadjusted raw price series distort performance rankings for stocks undergoing corporate actions."
         )
         box_c1 = Table([[Paragraph(ins_c1, style_body)]], colWidths=[540])
         box_c1.setStyle(TableStyle([
@@ -238,7 +230,7 @@ def build_pdf():
     if os.path.exists(c2_path):
         ins_c2 = (
             "<b>📌 Key Business Insights:</b><br/>"
-            "• The 20-day SMA (`ma20`) functions as a short-term trend filter, while the 50-day SMA (`ma50`) sets the medium-term structural trend.<br/>"
+            "• The 20-day Simple Moving Average (`ma20`) functions as a short-term trend filter, while the 50-day SMA (`ma50`) sets the medium-term structural trend.<br/>"
             "• Bajaj Auto exhibited an upward channel, growing from ₹2,454.10 to ₹2,700.70 (+10.0%).<br/>"
             "• Rows 1 to 19 for MA20 and 1 to 49 for MA50 were correctly nullified to eliminate partial-window distortion.<br/><br/>"
             "<b>💡 Strategic Recommendations:</b><br/>"
@@ -294,9 +286,9 @@ def build_pdf():
     if os.path.exists(c4_path):
         ins_c4 = (
             "<b>📌 Key Business Insights:</b><br/>"
-            "• Raw unadjusted data incorrectly lists TCS (-23.8%) and Infosys (-30.9%) as market losers.<br/>"
-            "• Corporate action price adjustment (halving pre-event prices for 1:1 bonus splits) proves true returns of **+52.4% for TCS** and **+38.2% for Infosys**!<br/>"
-            "• TVS Motors (+86.9%) and Eicher Motors (+82.6%) led overall wealth creation.<br/><br/>"
+            "• Raw unadjusted data lists TCS as -23.8% and Infosys as -30.9% (ranking #5 and #6 as bottom losers).<br/>"
+            "• Corporate action price adjustment (halving pre-event historical prices for 1:1 bonus splits) proves true returns of **+52.4% for TCS** and **+38.2% for Infosys**!<br/>"
+            "• Auto stocks (TVS +86.9%, Eicher +82.6%, Bajaj +10.0%, Hero +6.0%) required no bonus adjustments over this timeframe.<br/><br/>"
             "<b>💡 Strategic Recommendations:</b><br/>"
             "• Always adjust price series for bonus share issues and stock splits prior to calculating portfolio returns.<br/>"
             "• Technology sector holdings represent strong long-term wealth compounders once share counts are normalized.<br/><br/>"
@@ -326,10 +318,10 @@ def build_pdf():
             "• TCS and Bajaj Auto produced the highest signal frequency (12 & 12 Buys), reflecting periodic trend shifts.<br/>"
             "• Eicher Motors fired the fewest signals (6 Buys, 7 Sells), confirming a persistent long-term bull trend.<br/><br/>"
             "<b>💡 Strategic Recommendations:</b><br/>"
-            "• Favor lower-frequency signal stocks (like Eicher) for long-term passive accounts to minimize capital gains tax and transaction friction.<br/>"
+            "• Favor lower-frequency signal stocks (like Eicher) for passive long-term accounts to minimize transaction friction.<br/>"
             "• Allocate a transaction friction budget when running SMA crossover strategies across active trading accounts.<br/><br/>"
             "<b>⚠️ Methodological Risk & Caveats:</b><br/>"
-            "• High signal frequency does not correlate with profitability; range-bound stocks fire redundant, unprofitable signals."
+            "• High signal frequency does not correlate with profitability; range-bound stocks fire redundant signals."
         )
         box_c5 = Table([[Paragraph(ins_c5, style_body)]], colWidths=[540])
         box_c5.setStyle(TableStyle([

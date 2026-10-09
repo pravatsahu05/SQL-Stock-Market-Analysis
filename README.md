@@ -48,17 +48,10 @@ SQL Stock Market Analysis/
 
 ---
 
-## 🚀 Interactive Web Dashboard & SQL Studio
+## 🚀 Live Interactive Web Dashboard & App Links
 
-You can launch the **Interactive Web Dashboard** locally:
-
-```bash
-# 1. Run the Flask Web App
-python app.py
-
-# 2. Open your web browser and navigate to:
-http://127.0.0.1:5000
-```
+- 🌐 **Live Deployed Web Dashboard (Render.com):** **[https://sql-stock-market-analysis.onrender.com/](https://sql-stock-market-analysis.onrender.com/)**
+- 💻 **GitHub Repository:** **[https://github.com/pravatsahu05/SQL-Stock-Market-Analysis](https://github.com/pravatsahu05/SQL-Stock-Market-Analysis)**
 
 ### Dashboard Features:
 1. **Interactive SQL Query Studio**: Select any of the project tasks (Tasks 1 to 13 + Stretch Challenge) or type your own custom SQL query to execute in real-time against `stocks.db`. View tabular results with search, execution timer, row count, and CSV export.
