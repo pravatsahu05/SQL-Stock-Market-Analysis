@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Stock Market Analysis — Interactive Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header class="navbar">
+        <div class="brand">
+            <div class="brand-icon">📈</div>
+            <div>
+                <h1 class="brand-title">SQL Stock Market Analysis</h1>
+                <div class="brand-subtitle">Interactive Query Studio & Business Insights Dashboard</div>
+            </div>
+        </div>
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-target="sec-sql">SQL Query Studio</button>
+            <button class="nav-tab" data-target="sec-charts">Chart & Insights Gallery</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Executive Metrics Grid -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Analyzed Scope</span>
+                    <span class="metric-icon">📊</span>
+                </div>
+                <div class="metric-value">6 Stocks</div>
+                <div class="metric-subtext">Bajaj, Eicher, Hero, Infy, TCS, TVS</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Dataset Duration</span>
+                    <span class="metric-icon">📅</span>
+                </div>
+                <div class="metric-value">889 Days</div>
+                <div class="metric-subtext">Jan 1, 2015 – Jul 31, 2018</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Buy Signals Fired</span>
+                    <span class="metric-icon">▲</span>
+                </div>
+                <div class="metric-value" style="color:var(--accent-green);">56 Signals</div>
+                <div class="metric-subtext">20/50 SMA Golden Cross Confirmations</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Sell Signals Fired</span>
+                    <span class="metric-icon">▼</span>
+                </div>
+                <div class="metric-value" style="color:var(--accent-red);">57 Signals</div>
+                <div class="metric-subtext">20/50 SMA Death Cross Confirmations</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Top Performer</span>
+                    <span class="metric-icon">🏆</span>
+                </div>
+                <div class="metric-value" style="color:var(--accent-cyan);">+86.9%</div>
+                <div class="metric-subtext">TVS Motors (₹276.85 → ₹517.45)</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Data Traps Fixed</span>
+                    <span class="metric-icon">⚠️</span>
+                </div>
+                <div class="metric-value" style="color:var(--accent-gold);">2 Bonuses</div>
+                <div class="metric-subtext">TCS (+52.4%) & Infosys (+38.2%)</div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 1: SQL QUERY STUDIO -->
+        <section id="sec-sql" class="dashboard-section active">
+            <div class="studio-layout">
+
+                <!-- Sidebar Task List -->
+                <aside class="sidebar-panel">
+                    <h2 class="panel-title"><span>⚡</span> Project Tasks</h2>
+                    <div id="task-list" class="task-list">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </aside>
+
+                <!-- Main Query & Results Panel -->
+                <main class="main-editor-panel">
+
+                    <!-- Query Info & Editor Card -->
+                    <div class="query-card">
+                        <div class="query-meta-header">
+                            <div>
+                                <h2 id="query-title" class="query-title">Loading Task...</h2>
+                                <p id="query-desc" class="query-desc">Task description will appear here.</p>
+                            </div>
+                            <span id="query-cat" class="badge badge-cyan">Part 1</span>
+                        </div>
+
+                        <!-- Code Editor Wrapper -->
+                        <div class="code-editor-wrapper">
+                            <div class="editor-toolbar">
+                                <span class="editor-label">SQL QUERY EDITOR (SQLite / MySQL 8.0 Engine)</span>
+                                <span style="font-size:0.75rem;color:var(--text-muted);">Editable Code</span>
+                            </div>
+                            <textarea id="sql-editor" class="code-textarea" spellcheck="false"></textarea>
+                        </div>
+
+                        <div class="controls-row">
+                            <button id="btn-run-query" class="btn btn-primary">
+                                <span>▶</span> Execute Query
+                            </button>
+                            <div class="execution-stats">
+                                <div>Time: <span id="exec-time" class="stat-highlight">0 ms</span></div>
+                                <div>Rows: <span id="row-count" class="stat-highlight">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Validation Checkpoint Card -->
+                    <div style="background:rgba(0, 242, 254, 0.04);border:1px solid rgba(0, 242, 254, 0.2);border-radius:14px;padding:1rem 1.25rem;">
+                        <span style="font-weight:700;color:var(--accent-cyan);font-size:0.85rem;">🎯 STUDENT GUIDE CHECKPOINT EXPECTATION:</span>
+                        <p id="checkpoint-desc" style="font-size:0.875rem;color:var(--text-main);margin-top:0.25rem;">Checkpoint details will appear here.</p>
+                    </div>
+
+                    <!-- Results Data Table Card -->
+                    <div class="results-card">
+                        <div class="table-toolbar">
+                            <h3 style="font-size:1.1rem;font-weight:700;color:#ffffff;">Query Results</h3>
+                            <div style="display:flex;gap:1rem;align-items:center;">
+                                <input type="text" id="table-search" class="search-input" placeholder="Search rows...">
+                                <button id="btn-export-csv" class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.8rem;">
+                                    <span>📥</span> Export CSV
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead id="table-header">
+                                    <!-- Populated by JS -->
+                                </thead>
+                                <tbody id="table-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </section>
+
+
+        <!-- SECTION 2: CHART & INSIGHTS GALLERY -->
+        <section id="sec-charts" class="dashboard-section">
+            <div style="margin-bottom:1.5rem;">
+                <h2 style="font-size:1.5rem;font-weight:800;color:#ffffff;">Chart & Strategic Business Insights Hub</h2>
+                <p style="color:var(--text-muted);font-size:0.95rem;">
+                    Below are all 8 project visualizations displaying technical trends, moving average crossovers, signal frequencies, and corporate action data trap fixes accompanied by detailed Business Insights and Strategic Recommendations.
+                </p>
+            </div>
+
+            <div id="charts-grid" class="charts-grid">
+                <!-- Populated dynamically by JavaScript -->
+            </div>
+        </section>
+
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
