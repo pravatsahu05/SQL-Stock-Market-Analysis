@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 import sqlite3
 import pandas as pd
@@ -577,12 +576,5 @@ def get_chart_insights():
     return jsonify(CHARTS_INSIGHTS)
 
 if __name__ == '__main__':
-    # Check if launched via Streamlit CLI or Streamlit Cloud
-    if 'streamlit' in sys.modules or any('streamlit' in arg for arg in sys.argv):
-        try:
-            import streamlit_app
-        except Exception as e:
-            print("Importing streamlit_app error:", e)
-    else:
-        print('Starting SQL Stock Market Analysis Web Dashboard on http://127.0.0.1:5000')
-        app.run(host='127.0.0.1', port=5000, debug=False)
+    print('Starting SQL Stock Market Analysis Web Dashboard on http://127.0.0.1:5000')
+    app.run(host='127.0.0.1', port=5000, debug=True)
